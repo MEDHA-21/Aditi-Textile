@@ -85,82 +85,6 @@
     margin: 0;
 }
 
-.login-form {
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 8px;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-.form-group input:focus {
-    border-color: #e63946;
-}
-
-.password-input {
-    position: relative;
-}
-
-.password-input input {
-    padding-right: 45px;
-}
-
-.toggle-password {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-}
-
-.toggle-password:hover {
-    color: #e63946;
-}
-
-.forgot-password {
-    text-align: right;
-    margin-bottom: 20px;
-}
-
-.link-btn {
-    background: none;
-    border: none;
-    color: #e63946;
-    font-size: 14px;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.link-btn:hover {
-    text-decoration: underline;
-}
-
 .error-message {
     background: #fee;
     color: #c33;
@@ -171,63 +95,9 @@
     border: 1px solid #fcc;
 }
 
-.login-btn {
-    width: 100%;
-    padding: 14px;
-    background-color: #e63946;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.login-btn:hover:not(:disabled) {
-    background-color: #d32735;
-}
-
-.login-btn:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.divider {
-    text-align: center;
-    margin: 25px 0;
-    position: relative;
-}
-
-.divider::before,
-.divider::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 40%;
-    height: 1px;
-    background-color: #ddd;
-}
-
-.divider::before {
-    left: 0;
-}
-
-.divider::after {
-    right: 0;
-}
-
-.divider span {
-    background-color: white;
-    padding: 0 15px;
-    color: #999;
-    font-size: 14px;
-}
-
 .social-login {
     display: flex;
     gap: 10px;
-    margin-bottom: 20px;
 }
 
 .social-btn {
@@ -246,23 +116,19 @@
     transition: all 0.3s;
 }
 
-.social-btn:hover {
+.social-btn:hover:not(:disabled) {
     border-color: #e63946;
     color: #e63946;
 }
 
-.social-btn.google:hover {
+.social-btn.google:hover:not(:disabled) {
     background-color: #fff5f5;
 }
 
-.social-btn.facebook:hover {
-    background-color: #f0f5ff;
-}
-
-.signup-link {
-    text-align: center;
-    font-size: 14px;
-    color: #666;
+.social-btn:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
 @media (max-width: 480px) {
