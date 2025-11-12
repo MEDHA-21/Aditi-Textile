@@ -1,9 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiSearch, FiShoppingCart } from 'react-icons/fi';
+import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    const { cart } = useAuth();
+
     return (
         <nav className="navbar">
             <div className="navbar-container">
@@ -22,9 +26,9 @@ const Navbar = () => {
                     />
                 </div>
 
-                <div className="cart-icon">
+                <div className="cart-icon" onClick={() => navigate('/cart')} style={{ cursor: 'pointer' }}>
                     <FiShoppingCart size={24} />
-                    <span className="cart-badge">0</span>
+                    <span className="cart-badge">{cart.length}</span>
                 </div>
             </div>
         </nav>

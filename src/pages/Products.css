@@ -6,6 +6,29 @@
     margin: 0 auto;
 }
 
+.products-page .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+    color: #333;
+    font-weight: 500;
+    width: auto;
+    max-width: 120px;
+}
+
+.products-page .back-btn:hover {
+    background: #f5f5f5;
+    transform: translateX(-5px);
+}
+
 .products-header {
     margin-bottom: 20px;
 }

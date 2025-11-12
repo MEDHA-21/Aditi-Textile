@@ -1,12 +1,11 @@
 .product-details-page {
     min-height: 100vh;
-    padding: 20px;
-    padding-bottom: 80px;
+    padding: 90px 20px 80px 20px;
     background: #f9f9f9;
 }
 
 .back-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
@@ -17,6 +16,10 @@
     cursor: pointer;
     margin-bottom: 20px;
     transition: all 0.3s;
+    color: #333;
+    font-weight: 500;
+    width: auto;
+    max-width: 120px;
 }
 
 .back-btn:hover {

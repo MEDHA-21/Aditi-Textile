@@ -12,36 +12,36 @@ const Recommended = () => {
     const products = [
         {
             id: 1,
-            image: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400',
-            title: 'Elegant Handbag',
-            price: '₹2,499',
+            image: 'https://utkalamrita.com/cdn/shop/files/DSC_0168_06885829-536a-415e-99a6-d232d662ca9c.jpg?v=1750765822&w=400',
+            title: 'S Design Red Black Sambalpuri Dress Set',
+            price: '₹5,070.00',
             discount: '20%',
             rating: 4.5,
             inStock: true
         },
         {
             id: 2,
-            image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400',
-            title: 'Casual Shoes',
-            price: '₹1,999',
+            image: 'https://utkalamrita.com/cdn/shop/files/DSC_0669_1cd394de-ad17-4bb6-8007-60cf281f090e.jpg?v=1762864794&w=400',
+            title: 'Red Nabakothi Black Border Khandua Silk Saree',
+            price: '₹12,999',
             discount: '15%',
             rating: 4.3,
             inStock: true
         },
         {
             id: 3,
-            image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400',
-            title: 'Cotton T-Shirt',
-            price: '₹599',
+            image: 'https://goswadeshi.in/cdn/shop/products/gcsbfbcodm967-_281_29.jpg?v=1681122122?w=400',
+            title: 'Navy blue beige handwoven sambalpuri cotton dress material',
+            price: '₹4,799',
             discount: '30%',
             rating: 4.7,
             inStock: true
         },
         {
             id: 4,
-            image: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400',
-            title: 'Summer Dress',
-            price: '₹1,799',
+            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsL15Gh5DGR8sSfKhubws_jQV6WVa2LQL0CA&s?w=400',
+            title: 'Sambalpuri Dress Material With Dupatta',
+            price: '₹3,799',
             discount: '25%',
             rating: 4.6,
             inStock: true
@@ -71,7 +71,7 @@ const Recommended = () => {
                     <div 
                         key={product.id} 
                         className="product-card"
-                        onClick={() => navigate(`/product/${product.id}`)}
+                        onClick={() => navigate(`/product/${product.id}`, { state: { product } })}
                         style={{ cursor: 'pointer' }}
                     >
                         <div className="product-image-container">

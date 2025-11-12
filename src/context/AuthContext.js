@@ -192,6 +192,35 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const updateCartQuantity = async (itemId, newQuantity) => {
+        if (newQuantity < 1) return;
+        
+        const updatedCart = cart.map(item =>
+            item.id === itemId
+                ? { ...item, quantity: newQuantity }
+                : item
+        );
+        
+        setCart(updatedCart);
+        
+        if (isAuthenticated && user) {
+            localStorage.setItem(`cart_${user.uid}`, JSON.stringify(updatedCart));
+        } else {
+            localStorage.setItem('guest_cart', JSON.stringify(updatedCart));
+        }
+    };
+
+    const removeFromCart = async (itemId) => {
+        const updatedCart = cart.filter(item => item.id !== itemId);
+        setCart(updatedCart);
+        
+        if (isAuthenticated && user) {
+            localStorage.setItem(`cart_${user.uid}`, JSON.stringify(updatedCart));
+        } else {
+            localStorage.setItem('guest_cart', JSON.stringify(updatedCart));
+        }
+    };
+
     const value = {
         isAuthenticated,
         user,
@@ -209,6 +238,8 @@ export const AuthProvider = ({ children }) => {
         isInWishlist,
         cart,
         addToCart,
+        updateCartQuantity,
+        removeFromCart,
         loading
     };
 

@@ -7,6 +7,7 @@ import BottomNav from './components/BottomNav';
 import Login from './components/Login';
 import Home from './pages/Home';
 import Wishlist from './pages/Wishlist';
+import Cart from './pages/Cart';
 import Videos from './pages/Videos';
 import Chat from './pages/Chat';
 import Profile from './pages/Profile';
@@ -35,6 +36,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/videos" element={<Videos />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/profile" element={<Profile />} />

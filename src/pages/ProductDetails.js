@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
     MdFavoriteBorder, 
@@ -19,14 +19,18 @@ import './ProductDetails.css';
 const ProductDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const { addToWishlist, removeFromWishlist, isInWishlist, addToCart } = useAuth();
     
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [selectedSize, setSelectedSize] = useState('');
     const [quantity, setQuantity] = useState(1);
 
-    // Mock product data - will be replaced with API call
-    const product = {
+    // Get product from navigation state or use mock data
+    const passedProduct = location.state?.product;
+    
+    // Mock product data - fallback if no product passed
+    const mockProduct = {
         id: parseInt(id),
         name: 'Sambalpuri Cotton Saree',
         category: 'women',
@@ -64,6 +68,43 @@ const ProductDetails = () => {
         }
     };
 
+    // Convert Recommended product format to ProductDetails format if needed
+    const product = passedProduct ? {
+        id: passedProduct.id,
+        name: passedProduct.title || passedProduct.name,
+        category: passedProduct.category || 'women',
+        price: typeof passedProduct.price === 'string' 
+            ? parseInt(passedProduct.price.replace(/[₹,]/g, '')) 
+            : passedProduct.price,
+        originalPrice: passedProduct.originalPrice || 
+            (typeof passedProduct.price === 'string' 
+                ? parseInt(passedProduct.price.replace(/[₹,]/g, '')) * 1.3 
+                : passedProduct.price * 1.3),
+        discount: typeof passedProduct.discount === 'string' 
+            ? parseInt(passedProduct.discount) 
+            : passedProduct.discount || 20,
+        rating: passedProduct.rating || 4.5,
+        reviews: passedProduct.reviews || 50,
+        inStock: passedProduct.inStock !== undefined ? passedProduct.inStock : true,
+        stock: passedProduct.stock || 10,
+        images: passedProduct.images || [passedProduct.image],
+        description: passedProduct.description || 'Beautiful handwoven textile product featuring traditional craftsmanship.',
+        sizes: passedProduct.sizes || ['Free Size'],
+        material: passedProduct.material || '100% Cotton',
+        care: passedProduct.care || 'Hand wash in cold water, Dry in shade',
+        features: passedProduct.features || [
+            'Authentic handwoven design',
+            'Traditional craftsmanship',
+            'Comfortable fabric',
+            'Fade-resistant colors'
+        ],
+        specifications: passedProduct.specifications || {
+            'Fabric': 'Cotton',
+            'Pattern': 'Traditional',
+            'Occasion': 'Casual, Festive'
+        }
+    } : mockProduct;
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -87,9 +128,14 @@ const ProductDetails = () => {
         }
 
         const cartItem = {
-            ...product,
-            selectedSize: selectedSize || product.sizes[0],
-            quantity: quantity
+            id: product.id,
+            title: product.name,
+            name: product.name,
+            price: product.price,
+            image: product.images[0],
+            size: selectedSize || product.sizes[0],
+            quantity: quantity,
+            inStock: product.inStock
         };
 
         addToCart(cartItem);
