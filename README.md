@@ -1,70 +1,133 @@
-# Getting Started with Create React App
+# Aditi Textile - E-Commerce Web Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, full-featured e-commerce platform for textile products built with React and Firebase.
 
-## Available Scripts
+## 🌟 Features
 
-In the project directory, you can run:
+### Customer Features
+- **Product Browsing**: Browse products by categories (Women, Men, Kids, Others)
+- **Product Details**: Detailed product pages with image carousel, specifications, and features
+- **Wishlist**: Save favorite products for later
+- **Shopping Cart**: Add products to cart with size and quantity selection
+- **User Authentication**: Google Sign-In integration via Firebase
+- **Responsive Design**: Mobile-friendly interface with bottom navigation
+- **Search & Filter**: Find products easily
+
+### Shopkeeper Dashboard
+- **Product Management**: Add, edit, and delete products
+- **Stock Management**: Track and update inventory
+- **Order Management**: View and manage customer orders
+- **Secure Access**: Protected routes with authentication
+
+## 🚀 Tech Stack
+
+- **Frontend**: React 18
+- **Routing**: React Router v6
+- **Authentication**: Firebase Authentication (Google Sign-In)
+- **Database**: Firebase Firestore (ready for integration)
+- **Storage**: Firebase Storage (for product images)
+- **State Management**: React Context API
+- **Icons**: React Icons
+- **Styling**: CSS3 with responsive design
+
+## 📦 Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/MEDHA-21/Aditi-Textile.git
+cd aditi-textile
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up Firebase:
+   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+   - Enable Google Authentication
+   - Copy your Firebase configuration
+   - Update `src/firebase/config.js` with your credentials
+
+4. Start the development server:
+```bash
+npm start
+```
+
+## 🔧 Available Scripts
 
 ### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs the app in development mode at [http://localhost:3000](http://localhost:3000)
 
 ### `npm run build`
+Creates an optimized production build in the `build` folder
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `npm test`
+Launches the test runner in interactive watch mode
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🔐 Authentication
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Currently supports:
+- ✅ Google Sign-In
+- 🔄 Email/Password (coming soon)
 
-### `npm run eject`
+User data is stored in localStorage for authenticated users, with Firestore integration ready for future deployment.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🎨 Key Features Breakdown
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Product Details Page
+- Multi-image carousel with thumbnails
+- Size selection (S, M, L, XL, XXL)
+- Quantity controls
+- Add to cart/wishlist
+- Product specifications table
+- Care instructions
+- Feature highlights
+- Star ratings and reviews
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Wishlist & Cart
+- Persistent storage across sessions
+- User-specific data (authenticated users)
+- Guest support via localStorage
+- Easy product management
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Shopkeeper Dashboard
+- Secure login credentials:
+  - Username: `rakhi_aditi` / Password: `aditi@2025`
+  - Username: `worker_aditi` / Password: `worker@2025`
+- Complete product CRUD operations
+- Stock tracking
+- Order management
 
-## Learn More
+## 🚀 Deployment
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+For production deployment:
+```bash
+npm run build
+netlify deploy --prod
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🔮 Future Enhancements
 
-### Code Splitting
+- [ ] Email/Password authentication
+- [ ] Firestore database integration
+- [ ] Payment gateway integration
+- [ ] Order tracking system
+- [ ] Customer reviews and ratings
+- [ ] Product search with filters
+- [ ] Email notifications
+- [ ] Admin analytics dashboard
+- [ ] Discount/coupon system
+- [ ] Multiple payment methods
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 📄 License
 
-### Analyzing the Bundle Size
+This project is private and proprietary.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 👨‍💻 Development
 
-### Making a Progressive Web App
+Built with ❤️ by MEDHA-21
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Note**: Firebase configuration credentials are required for authentication features to work. See `FIREBASE_SETUP.md` for detailed setup instructions.
