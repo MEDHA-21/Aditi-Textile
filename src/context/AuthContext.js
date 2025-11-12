@@ -8,8 +8,7 @@ import {
     signInWithPopup,
     updateProfile
 } from 'firebase/auth';
-import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
-import { auth, db } from '../firebase/config';
+import { auth } from '../firebase/config';
 
 const AuthContext = createContext();
 
@@ -31,26 +30,24 @@ export const AuthProvider = ({ children }) => {
 
     // Listen to Firebase auth state changes
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
             if (firebaseUser) {
                 // User is signed in
-                const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
                 const userData = {
                     uid: firebaseUser.uid,
                     email: firebaseUser.email,
-                    displayName: firebaseUser.displayName || userDoc.data()?.displayName || 'User',
-                    photoURL: firebaseUser.photoURL || userDoc.data()?.photoURL || null
+                    displayName: firebaseUser.displayName || 'User',
+                    photoURL: firebaseUser.photoURL || null
                 };
                 
                 setUser(userData);
                 setIsAuthenticated(true);
                 
-                // Load user's wishlist and cart from Firestore
-                if (userDoc.exists()) {
-                    const data = userDoc.data();
-                    setWishlist(data.wishlist || []);
-                    setCart(data.cart || []);
-                }
+                // Load user's wishlist and cart from localStorage
+                const userWishlist = localStorage.getItem(`wishlist_${firebaseUser.uid}`);
+                const userCart = localStorage.getItem(`cart_${firebaseUser.uid}`);
+                if (userWishlist) setWishlist(JSON.parse(userWishlist));
+                if (userCart) setCart(JSON.parse(userCart));
             } else {
                 // User is signed out
                 setUser(null);
@@ -77,17 +74,6 @@ export const AuthProvider = ({ children }) => {
             // Update profile with display name
             await updateProfile(user, { displayName });
             
-            // Create user document in Firestore
-            await setDoc(doc(db, 'users', user.uid), {
-                uid: user.uid,
-                email: user.email,
-                displayName: displayName,
-                createdAt: new Date(),
-                wishlist: [],
-                cart: [],
-                orders: []
-            });
-            
             return { success: true };
         } catch (error) {
             return { success: false, error: error.message };
@@ -109,23 +95,7 @@ export const AuthProvider = ({ children }) => {
     const signInWithGoogle = async () => {
         try {
             const provider = new GoogleAuthProvider();
-            const userCredential = await signInWithPopup(auth, provider);
-            const user = userCredential.user;
-            
-            // Check if user document exists, create if not
-            const userDoc = await getDoc(doc(db, 'users', user.uid));
-            if (!userDoc.exists()) {
-                await setDoc(doc(db, 'users', user.uid), {
-                    uid: user.uid,
-                    email: user.email,
-                    displayName: user.displayName,
-                    photoURL: user.photoURL,
-                    createdAt: new Date(),
-                    wishlist: [],
-                    cart: [],
-                    orders: []
-                });
-            }
+            await signInWithPopup(auth, provider);
             
             setShowLoginModal(false);
             return { success: true };
@@ -172,14 +142,8 @@ export const AuthProvider = ({ children }) => {
         setWishlist(updatedWishlist);
         
         if (isAuthenticated && user) {
-            // Save to Firestore
-            try {
-                await updateDoc(doc(db, 'users', user.uid), {
-                    wishlist: updatedWishlist
-                });
-            } catch (error) {
-                console.error('Error updating wishlist:', error);
-            }
+            // Save to localStorage for authenticated user
+            localStorage.setItem(`wishlist_${user.uid}`, JSON.stringify(updatedWishlist));
         } else {
             // Save to localStorage for guests
             localStorage.setItem('guest_wishlist', JSON.stringify(updatedWishlist));
@@ -191,14 +155,8 @@ export const AuthProvider = ({ children }) => {
         setWishlist(updatedWishlist);
         
         if (isAuthenticated && user) {
-            // Save to Firestore
-            try {
-                await updateDoc(doc(db, 'users', user.uid), {
-                    wishlist: updatedWishlist
-                });
-            } catch (error) {
-                console.error('Error updating wishlist:', error);
-            }
+            // Save to localStorage for authenticated user
+            localStorage.setItem(`wishlist_${user.uid}`, JSON.stringify(updatedWishlist));
         } else {
             // Save to localStorage for guests
             localStorage.setItem('guest_wishlist', JSON.stringify(updatedWishlist));
@@ -226,14 +184,10 @@ export const AuthProvider = ({ children }) => {
         setCart(updatedCart);
         
         if (isAuthenticated && user) {
-            try {
-                await updateDoc(doc(db, 'users', user.uid), {
-                    cart: updatedCart
-                });
-            } catch (error) {
-                console.error('Error updating cart:', error);
-            }
+            // Save to localStorage for authenticated user
+            localStorage.setItem(`cart_${user.uid}`, JSON.stringify(updatedCart));
         } else {
+            // Save to localStorage for guests
             localStorage.setItem('guest_cart', JSON.stringify(updatedCart));
         }
     };
