@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FiEdit2, FiChevronRight, FiLogOut } from 'react-icons/fi';
 import { AiOutlineShoppingCart, AiOutlineHeart } from 'react-icons/ai';
 import { IoLocationOutline } from 'react-icons/io5';
@@ -9,6 +10,7 @@ import './Profile.css';
 
 const Profile = () => {
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     const menuItems = [
         {
@@ -32,6 +34,10 @@ const Profile = () => {
 
     const handleLogout = () => {
         logout();
+    };
+
+    const handleMenuClick = (path) => {
+        navigate(path);
     };
 
     return (
@@ -60,7 +66,11 @@ const Profile = () => {
                 {menuItems.map((section, idx) => (
                     <div key={idx} className="menu-section">
                         {section.items.map((item, itemIdx) => (
-                            <div key={itemIdx} className="menu-item">
+                            <div 
+                                key={itemIdx} 
+                                className="menu-item"
+                                onClick={() => handleMenuClick(item.path)}
+                            >
                                 <div className="menu-item-left">
                                     <span className="menu-icon">{item.icon}</span>
                                     <span className="menu-label">{item.label}</span>

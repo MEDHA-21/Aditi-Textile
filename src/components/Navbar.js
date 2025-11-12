@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FiSearch, FiShoppingCart } from 'react-icons/fi';
 import './Navbar.css';
 
@@ -7,7 +8,9 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="navbar-container">
                 <div className="navbar-brand">
-                    <h1>ADITI TEXTILE</h1>
+                    <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <h1>ADITI TEXTILE</h1>
+                    </Link>
                 </div>
 
                 <div className="search-box">

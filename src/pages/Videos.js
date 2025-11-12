@@ -1,64 +1,155 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BiVideo } from 'react-icons/bi';
+import { FaYoutube } from 'react-icons/fa';
 import './Videos.css';
 
 const Videos = () => {
-    // Mock video data
-    const videos = [
+    const [selectedVideo, setSelectedVideo] = useState(null);
+
+    // YouTube Videos
+    const youtubeVideos = [
         {
             id: 1,
-            thumbnail: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
-            title: 'Summer Collection 2025',
-            duration: '5:30',
-            views: '12K views'
+            videoId: 'Tq27C-w_SuQ',
+            title: 'Sambalpuri Fashion Collection',
+            thumbnail: 'https://img.youtube.com/vi/Tq27C-w_SuQ/maxresdefault.jpg',
+            type: 'video'
         },
         {
             id: 2,
-            thumbnail: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400',
-            title: 'How to Style Cotton Sarees',
-            duration: '8:15',
-            views: '25K views'
+            videoId: 'FzlBp-uKtv0',
+            title: 'Traditional Wear Styling',
+            thumbnail: 'https://img.youtube.com/vi/FzlBp-uKtv0/maxresdefault.jpg',
+            type: 'video'
         },
         {
             id: 3,
-            thumbnail: 'https://images.unsplash.com/photo-1558769132-cb1aea3c4bf5?w=400',
-            title: 'Behind the Scenes - Textile Making',
-            duration: '12:45',
-            views: '8K views'
-        },
-        {
-            id: 4,
-            thumbnail: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400',
-            title: 'Fashion Tips for Traditional Wear',
-            duration: '6:20',
-            views: '18K views'
+            videoId: 'HvpSRQqw1n8',
+            title: 'Latest Fashion Trends',
+            thumbnail: 'https://img.youtube.com/vi/HvpSRQqw1n8/maxresdefault.jpg',
+            type: 'video'
         }
     ];
+
+    // YouTube Shorts from Aditi's Corner channel
+    const youtubeShorts = [
+        {
+            id: 4,
+            videoId: 'Zaovg2Wx6WQ',
+            title: 'Sambalpuri Saree Collection',
+            thumbnail: 'https://img.youtube.com/vi/Zaovg2Wx6WQ/maxresdefault.jpg',
+            type: 'short'
+        },
+        {
+            id: 5,
+            videoId: 'KLulwt0GxUg',
+            title: 'Handloom Weaving Showcase',
+            thumbnail: 'https://img.youtube.com/vi/KLulwt0GxUg/maxresdefault.jpg',
+            type: 'short'
+        },
+        {
+            id: 6,
+            videoId: 'beu896gBASI',
+            title: 'Sambalpuri Kurti Showcase',
+            thumbnail: 'https://img.youtube.com/vi/beu896gBASI/maxresdefault.jpg',
+            type: 'short'
+        }
+    ];
+
+    const handleVideoClick = (video) => {
+        setSelectedVideo(video);
+    };
+
+    const closeVideoPlayer = () => {
+        setSelectedVideo(null);
+    };
 
     return (
         <div className="videos-page">
             <div className="page-header">
-                <h1>Fashion Videos</h1>
-                <p>Watch our latest collections and styling tips</p>
+                <div className="header-content">
+                    <h1>Fashion Videos</h1>
+                    <p>Watch our latest collections and styling tips</p>
+                </div>
+                <a 
+                    href="https://www.youtube.com/@AditisCorner-z6h" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="youtube-channel-link"
+                >
+                    <FaYoutube size={24} />
+                    Visit Channel
+                </a>
             </div>
 
-            <div className="videos-grid">
-                {videos.map((video) => (
-                    <div key={video.id} className="video-card">
-                        <div className="video-thumbnail">
-                            <img src={video.thumbnail} alt={video.title} />
-                            <div className="play-overlay">
-                                <BiVideo size={40} />
+            {/* YouTube Shorts Section */}
+            <div className="video-section">
+                <h2 className="section-title">YouTube Shorts</h2>
+                <div className="videos-grid">
+                    {youtubeShorts.map((video) => (
+                        <div 
+                            key={video.id} 
+                            className="video-card"
+                            onClick={() => handleVideoClick(video)}
+                        >
+                            <div className="video-thumbnail">
+                                <img src={video.thumbnail} alt={video.title} />
+                                <div className="play-overlay">
+                                    <BiVideo size={40} />
+                                </div>
+                                <span className="shorts-badge">Shorts</span>
                             </div>
-                            <span className="video-duration">{video.duration}</span>
+                            <div className="video-info">
+                                <h3>{video.title}</h3>
+                                <p className="channel-name">Aditi's Corner</p>
+                            </div>
                         </div>
-                        <div className="video-info">
-                            <h3>{video.title}</h3>
-                            <p>{video.views}</p>
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
+
+            {/* Full YouTube Videos Section */}
+            <div className="video-section">
+                <h2 className="section-title">YouTube Videos</h2>
+                <div className="videos-grid">
+                    {youtubeVideos.map((video) => (
+                        <div 
+                            key={video.id} 
+                            className="video-card"
+                            onClick={() => handleVideoClick(video)}
+                        >
+                            <div className="video-thumbnail">
+                                <img src={video.thumbnail} alt={video.title} />
+                                <div className="play-overlay">
+                                    <BiVideo size={40} />
+                                </div>
+                            </div>
+                            <div className="video-info">
+                                <h3>{video.title}</h3>
+                                <p className="channel-name">Aditi's Corner</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Video Player Modal */}
+            {selectedVideo && (
+                <div className="video-modal" onClick={closeVideoPlayer}>
+                    <div className="video-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="close-modal" onClick={closeVideoPlayer}>×</button>
+                        <iframe
+                            width="100%"
+                            height="100%"
+                            src={`https://www.youtube.com/embed/${selectedVideo.videoId}`}
+                            title={selectedVideo.title}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        ></iframe>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

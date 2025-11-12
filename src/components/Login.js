@@ -1,35 +1,63 @@
 import React, { useState } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineClose } from 'react-icons/ai';
-import { FaGoogle, FaFacebook } from 'react-icons/fa';
+import { FaGoogle } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
 const Login = () => {
-    const { closeLoginModal, login } = useAuth();
+    const { closeLoginModal, signIn, signUp, signInWithGoogle } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [displayName, setDisplayName] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [isSignUp, setIsSignUp] = useState(false);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Mock login - replace with actual authentication
-        const userData = {
-            name: email.split('@')[0],
-            email: email,
-            avatar: null
-        };
-        login(userData);
+        setError('');
+        setLoading(true);
+
+        try {
+            if (isSignUp) {
+                // Sign up
+                if (!displayName.trim()) {
+                    setError('Please enter your name');
+                    setLoading(false);
+                    return;
+                }
+                const result = await signUp(email, password, displayName);
+                if (!result.success) {
+                    setError(result.error);
+                }
+            } else {
+                // Sign in
+                const result = await signIn(email, password);
+                if (!result.success) {
+                    setError(result.error);
+                }
+            }
+        } catch (err) {
+            setError('An error occurred. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleSocialLogin = (provider) => {
-        // Mock social login - replace with actual OAuth
-        const userData = {
-            name: `User from ${provider}`,
-            email: `user@${provider}.com`,
-            avatar: null
-        };
-        login(userData);
+    const handleGoogleLogin = async () => {
+        setError('');
+        setLoading(true);
+        try {
+            const result = await signInWithGoogle();
+            if (!result.success) {
+                setError(result.error);
+            }
+        } catch (err) {
+            setError('Google sign-in failed. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -45,6 +73,19 @@ const Login = () => {
                 </div>
 
                 <form className="login-form" onSubmit={handleSubmit}>
+                    {isSignUp && (
+                        <div className="form-group">
+                            <label>Full Name</label>
+                            <input
+                                type="text"
+                                placeholder="Enter your full name"
+                                value={displayName}
+                                onChange={(e) => setDisplayName(e.target.value)}
+                                required
+                            />
+                        </div>
+                    )}
+
                     <div className="form-group">
                         <label>Email</label>
                         <input
@@ -61,10 +102,11 @@ const Login = () => {
                         <div className="password-input">
                             <input
                                 type={showPassword ? 'text' : 'password'}
-                                placeholder="Enter your password"
+                                placeholder={isSignUp ? 'Create a password (min 6 characters)' : 'Enter your password'}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
+                                minLength={6}
                             />
                             <button
                                 type="button"
@@ -76,14 +118,16 @@ const Login = () => {
                         </div>
                     </div>
 
+                    {error && <div className="error-message">{error}</div>}
+
                     {!isSignUp && (
                         <div className="forgot-password">
                             <button type="button" className="link-btn">Forgot Password?</button>
                         </div>
                     )}
 
-                    <button type="submit" className="login-btn">
-                        {isSignUp ? 'Sign Up' : 'Login'}
+                    <button type="submit" className="login-btn" disabled={loading}>
+                        {loading ? 'Please wait...' : (isSignUp ? 'Sign Up' : 'Login')}
                     </button>
                 </form>
 
@@ -92,11 +136,8 @@ const Login = () => {
                 </div>
 
                 <div className="social-login">
-                    <button className="social-btn google" onClick={() => handleSocialLogin('Google')}>
-                        <FaGoogle /> Google
-                    </button>
-                    <button className="social-btn facebook" onClick={() => handleSocialLogin('Facebook')}>
-                        <FaFacebook /> Facebook
+                    <button className="social-btn google" onClick={handleGoogleLogin} disabled={loading}>
+                        <FaGoogle /> Continue with Google
                     </button>
                 </div>
 

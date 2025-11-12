@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { useAuth } from '../context/AuthContext';
 import './Recommended.css';
 
 const Recommended = () => {
+    const navigate = useNavigate();
     const { addToWishlist, removeFromWishlist, isInWishlist } = useAuth();
 
     // Sample product data
@@ -66,18 +68,26 @@ const Recommended = () => {
 
             <div className="products-grid">
                 {products.map((product) => (
-                    <div key={product.id} className="product-card">
+                    <div 
+                        key={product.id} 
+                        className="product-card"
+                        onClick={() => navigate(`/product/${product.id}`)}
+                        style={{ cursor: 'pointer' }}
+                    >
                         <div className="product-image-container">
                             <img src={product.image} alt={product.title} className="product-image" />
                             <div className="discount-badge">{product.discount}</div>
                             <button 
-                                className={`wishlist-btn ${isInWishlist(product.id) ? 'active' : ''}`}
-                                onClick={() => handleWishlistToggle(product)}
+                                className="wishlist-btn"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleWishlistToggle(product);
+                                }}
                             >
                                 {isInWishlist(product.id) ? (
-                                    <AiFillHeart size={20} />
+                                    <AiFillHeart size={20} color="#e63946" />
                                 ) : (
-                                    <AiOutlineHeart size={20} />
+                                    <AiOutlineHeart size={20} color="#666" />
                                 )}
                             </button>
                         </div>

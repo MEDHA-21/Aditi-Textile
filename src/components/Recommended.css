@@ -99,16 +99,12 @@
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
+    z-index: 2;
 }
 
 .wishlist-btn:hover {
-  background-color: #e63946;
-  color: white;
-}
-
-.wishlist-btn.active {
-  background-color: #e63946;
-  color: white;
+  background-color: #fff5f5;
+  transform: scale(1.1);
 }
 
 .product-info {
