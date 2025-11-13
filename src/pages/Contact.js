@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BiMap } from 'react-icons/bi';
+import { BiMap, BiPhoneCall } from 'react-icons/bi';
 import { FaWhatsapp, FaInstagram } from 'react-icons/fa';
 import './Contact.css';
 
@@ -11,34 +11,26 @@ const Contact = () => {
         messageText: ''
     });
 
-    const updateField = (event) => {
-        const { name, value } = event.target;
-        setContactForm(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
-    const submitForm = (event) => {
-        event.preventDefault();
-        console.log('Contact form data:', contactForm);
-        alert('Thanks for reaching out! We\'ll get back to you soon.');
-        setContactForm({ fullName: '', emailAddress: '', topic: '', messageText: '' });
-    };
-
     const contactMethods = [
+        {
+            icon: <BiPhoneCall size={28} />,
+            title: 'Call Us',
+            detail: '+91 94377 37336',
+            link: 'tel:+919437737336',
+            color: '#10B981'
+        },
         {
             icon: <BiMap size={28} />,
             title: 'Visit Our Store',
-            detail: 'Sambalpur, Near Khetrajpur State Bank',
+            detail: 'Aditi Textile, Near Khetrajpur State Bank, Sambalpur, Odisha 768003',
             link: 'https://www.google.com/maps/dir//FXG3%2BFMQ,+Dhubopara,+Bada+Bazar,+Khetrajpur,+Sambalpur,+Odisha+768003/@21.476188,83.8718381,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3a21166d26b57fcd:0x305c36d645986aff!2m2!1d83.9542393!2d21.4762068?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D',
             color: '#EF4444'
         },
         {
             icon: <FaWhatsapp size={28} />,
-            title: 'WhatsApp Group',
-            detail: 'Join our community',
-            link: 'https://chat.whatsapp.com/L8w9GoGCiK31GOnhLyNxEa',
+            title: 'WhatsApp',
+            detail: 'Chat with us',
+            link: 'https://wa.me/919437737336',
             color: '#25D366'
         },
         {
@@ -53,7 +45,7 @@ const Contact = () => {
     const socialPlatforms = [
         { 
             icon: <FaWhatsapp size={26} />, 
-            link: 'https://chat.whatsapp.com/L8w9GoGCiK31GOnhLyNxEa',
+            link: 'https://wa.me/919437737336',
             color: '#25D366',
             label: 'WhatsApp'
         },

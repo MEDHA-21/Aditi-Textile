@@ -4,8 +4,8 @@ import { MdMessage } from 'react-icons/md';
 import './Chat.css';
 
 const Chat = () => {
-    const whatsappNumber = '917978066232';
-    const phoneNumber = '079780 66232';
+    const whatsappNumber = '919437737336';
+    const phoneNumber = '9437737336';
     
     // Check if store is currently open (10 AM - 8 PM)
     const isStoreOpen = () => {
@@ -89,7 +89,7 @@ const Chat = () => {
                         const msg = encodeURIComponent('What are your delivery charges?');
                         window.open(`https://wa.me/${whatsappNumber}?text=${msg}`, '_blank');
                     }}>
-                        Delivery Information
+                        Delivery Charges Information
                     </button>
                     <button onClick={() => {
                         const msg = encodeURIComponent('I want to know about bulk orders');
@@ -102,6 +102,12 @@ const Chat = () => {
                         window.open(`https://wa.me/${whatsappNumber}?text=${msg}`, '_blank');
                     }}>
                         Custom Design Request
+                    </button>
+                    <button onClick={() => {
+                        const msg = encodeURIComponent('I am interested in becoming a reseller. Can you share the details?');
+                        window.open(`https://wa.me/${whatsappNumber}?text=${msg}`, '_blank');
+                    }}>
+                        Reseller Inquiry
                     </button>
                 </div>
             </div>
